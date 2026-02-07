@@ -160,7 +160,6 @@ const JobsPage = () => {
               <th className="px-4 py-3 text-left text-sm font-semibold">Company</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">Location</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">CEO / Founder</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">CEO Email</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">Status</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">Email</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">Actions</th>
@@ -169,11 +168,11 @@ const JobsPage = () => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="9" className="px-6 py-8 text-center">Loading...</td>
+                <td colSpan="8" className="px-6 py-8 text-center">Loading...</td>
               </tr>
             ) : filteredJobs.length === 0 ? (
               <tr>
-                <td colSpan="9" className="px-6 py-8 text-center text-gray-500">No jobs found</td>
+                <td colSpan="8" className="px-6 py-8 text-center text-gray-500">No jobs found</td>
               </tr>
             ) : (
               filteredJobs.map((job) => {
@@ -204,13 +203,6 @@ const JobsPage = () => {
                     <td className="px-4 py-4 text-sm">{job.location}</td>
                     <td className="px-4 py-4 text-sm">
                       {job.ceoContact?.ceoName || <span className="text-gray-400">—</span>}
-                    </td>
-                    <td className="px-4 py-4 text-sm">
-                      {job.ceoContact?.ceoEmail ? (
-                        <span className="text-blue-600">{job.ceoContact.ceoEmail}</span>
-                      ) : (
-                        <span className="text-gray-400">—</span>
-                      )}
                     </td>
                     <td className="px-4 py-4">
                       <span

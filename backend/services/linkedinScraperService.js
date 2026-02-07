@@ -394,9 +394,15 @@ class LinkedInScraperService {
 
     for (const job of jobs) {
       try {
-        const existingJob = await Job.findOne({
-          linkedinJobId: job.linkedinJobId
-        });
+        // Check by linkedinJobId first, then by title + company
+        let existingJob = await Job.findOne({ linkedinJobId: job.linkedinJobId });
+
+        if (!existingJob && job.title && job.company?.name) {
+          existingJob = await Job.findOne({
+            title: { $regex: new RegExp(`^${job.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') },
+            'company.name': { $regex: new RegExp(`^${job.company.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+          });
+        }
 
         if (!existingJob) {
           const newJob = new Job(job);

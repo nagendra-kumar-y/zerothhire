@@ -211,6 +211,25 @@ router.post('/:id/process', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   try {
+    // Duplicate check: by email if present, otherwise by title + company
+    const { title, company } = req.body;
+    let existing = null;
+
+    if (req.body.ceoContact?.ceoEmail) {
+      existing = await Job.findOne({ 'ceoContact.ceoEmail': req.body.ceoContact.ceoEmail });
+    }
+
+    if (!existing && title && company?.name) {
+      existing = await Job.findOne({
+        title: { $regex: new RegExp(`^${title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') },
+        'company.name': { $regex: new RegExp(`^${company.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+      });
+    }
+
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'Duplicate job: a job with this title and company already exists' });
+    }
+
     const job = new Job(req.body);
     const saved = await job.save();
     res.status(201).json({ success: true, data: saved });
