@@ -37,5 +37,8 @@ coverage/
 
 # Debug artifacts
 debug/
-*.debug.html
-*.debug.png
+*-debug.html
+*-debug.png
+
+# Puppeteer cache
+.cache/
