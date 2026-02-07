@@ -3,7 +3,7 @@ services:
     name: zerothhire-backend
     runtime: node
     rootDir: backend
-    buildCommand: npm install
+    buildCommand: npm install && npm run build
     startCommand: node server.js
     envVars:
       - key: NODE_ENV
