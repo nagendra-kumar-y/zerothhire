@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { jobsAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import { FiSearch, FiMail, FiCheck, FiTrash2 } from 'react-icons/fi';
@@ -12,11 +12,7 @@ const JobsPage = () => {
   const [search, setSearch] = useState('');
   const [selectedIds, setSelectedIds] = useState([]);
 
-  useEffect(() => {
-    fetchJobs();
-  }, [page, filter]);
-
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     setLoading(true);
     try {
       const params = { page, limit: 20 };
@@ -32,7 +28,11 @@ const JobsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, filter]);
+
+  useEffect(() => {
+    fetchJobs();
+  }, [fetchJobs]);
 
   const toggleSelect = (id) => {
     setSelectedIds((prev) =>

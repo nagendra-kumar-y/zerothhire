@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { candidatesAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import { FiStar, FiTrash2 } from 'react-icons/fi';
@@ -8,11 +8,7 @@ const CandidatesPage = () => {
   const [loading, setLoading] = useState(false);
   const [sector, setSector] = useState('all');
 
-  useEffect(() => {
-    fetchCandidates();
-  }, [sector]);
-
-  const fetchCandidates = async () => {
+  const fetchCandidates = useCallback(async () => {
     setLoading(true);
     try {
       const params = { limit: 50 };
@@ -25,7 +21,11 @@ const CandidatesPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [sector]);
+
+  useEffect(() => {
+    fetchCandidates();
+  }, [fetchCandidates]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure?')) return;
