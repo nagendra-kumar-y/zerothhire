@@ -29,10 +29,15 @@ app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
+    // Allow configured origins
     if (allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       return callback(null, true);
     }
-    callback(new Error('Not allowed by CORS'));
+    // Allow any Vercel preview/production URL for this project
+    if (origin.match(/^https:\/\/zerothhire.*\.vercel\.app$/)) {
+      return callback(null, true);
+    }
+    callback(null, false);
   },
   credentials: true
 }));
