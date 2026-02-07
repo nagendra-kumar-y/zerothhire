@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { jobsAPI } from '../services/api';
 import toast from 'react-hot-toast';
-import { FiSearch, FiMail, FiCheck, FiTrash2 } from 'react-icons/fi';
+import { FiSearch, FiMail, FiTrash2 } from 'react-icons/fi';
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState([]);
@@ -161,18 +161,17 @@ const JobsPage = () => {
               <th className="px-4 py-3 text-left text-sm font-semibold">Location</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">CEO / Founder</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">Status</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Email</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">Actions</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="8" className="px-6 py-8 text-center">Loading...</td>
+                <td colSpan="7" className="px-6 py-8 text-center">Loading...</td>
               </tr>
             ) : filteredJobs.length === 0 ? (
               <tr>
-                <td colSpan="8" className="px-6 py-8 text-center text-gray-500">No jobs found</td>
+                <td colSpan="7" className="px-6 py-8 text-center text-gray-500">No jobs found</td>
               </tr>
             ) : (
               filteredJobs.map((job) => {
@@ -216,15 +215,6 @@ const JobsPage = () => {
                       >
                         {job.processingStatus || 'pending'}
                       </span>
-                    </td>
-                    <td className="px-4 py-4">
-                      {job.emailSent ? (
-                        <span className="flex items-center gap-1 text-green-600 text-xs font-semibold">
-                          <FiCheck size={14} /> Sent
-                        </span>
-                      ) : (
-                        <span className="text-gray-400 text-xs">Not Sent</span>
-                      )}
                     </td>
                     <td className="px-4 py-4">
                       <button
