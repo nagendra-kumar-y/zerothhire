@@ -87,7 +87,7 @@ const seedCandidates = [
 
 async function seedDatabase() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/weekday-automation');
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/zerothhire');
 
     // Clear existing candidates
     await Candidate.deleteMany({});
