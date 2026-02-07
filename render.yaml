@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: zerothhire-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: FROM_EMAIL
+        sync: false
+      - key: FROM_NAME
+        value: ZerothHire
+      - key: SEND_EMAILS
+        value: "false"
+      - key: FRONTEND_URL
+        sync: false
+      - key: HUNTER_API_KEY
+        sync: false
+      - key: LI_AT
+        sync: false
