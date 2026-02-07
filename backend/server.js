@@ -20,8 +20,6 @@ const automationRoutes = require('./routes/automation');
 const automationService = require('./services/automationService');
 
 // Middleware
-app.use(helmet());
-
 const allowedOrigins = [
   'http://localhost:3000',
   process.env.FRONTEND_URL
@@ -37,6 +35,12 @@ app.use(cors({
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true
+}));
+
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginOpenerPolicy: { policy: 'unsafe-none' },
+  contentSecurityPolicy: false
 }));
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json({ limit: '10mb' }));
